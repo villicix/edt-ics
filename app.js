@@ -1,19 +1,20 @@
-// /app.js
+// app.js
 async function loadOptions(url, selectEl) {
   try {
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
     const arr = await res.json();
 
-    // reset 
+    // reset pour éviter les doublons si re-init
     [...selectEl.querySelectorAll('option:not(:first-child)')].forEach(o => o.remove());
 
     for (const it of arr) {
       const opt = document.createElement('option');
-      opt.value = it.url;          // ex: cal/publics/xxx.ics
-      opt.textContent = it.label;  // ex: BUT2 Info A
+      opt.value = it.url;          // ex: "cal/publics/xxx.ics"
+      opt.textContent = it.label;  // ex: "BUT2 Info A"
       selectEl.appendChild(opt);
     }
+    console.debug('OK', url, `(${arr.length} items)`);
   } catch (e) {
     console.error('loadOptions failed for', url, e);
     selectEl.innerHTML = '<option value="">Erreur: impossible de charger la liste</option>';
@@ -28,7 +29,7 @@ function wireSelect(selectId, linkId) {
     if (sel.value) {
       a.href = sel.value;
       a.classList.remove('hidden');
-      // DL direct à la sélection :
+      // Téléchargement auto ?
       // window.location.assign(sel.value);
     } else {
       a.classList.add('hidden');
