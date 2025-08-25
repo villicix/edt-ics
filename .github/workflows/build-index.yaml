@@ -19,3 +19,4 @@ jobs:
         with:
           commit_message: "chore: regen cal/*/index.json"
           file_pattern: cal/publics/index.json cal/ues/index.json
+
