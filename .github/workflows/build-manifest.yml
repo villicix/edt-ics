@@ -1,0 +1,23 @@
+name: Build manifest
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate manifest
+        run: |
+          node -e "require('fs').writeFileSync('manifest.json', JSON.stringify((()=>{const fs=require('fs');const path=require('path');const walk=(root)=>{let out={};const exists=fs.existsSync(root);if(!exists) return out;for(const dir of fs.readdirSync(root,{withFileTypes:true}).filter(d=>d.isDirectory())){const slug=dir.name;const folder=path.join(root,slug);const files=fs.readdirSync(folder,{withFileTypes:true}).filter(f=>f.isFile() && f.name.toLowerCase().endsWith('.ics')).map(f=>path.join(folder,f.name).replace(/\\/g,'/'));if(files.length) out[slug]=files; }return out;};return {publics: walk('cal/publics'), ues: walk('cal/ues')};})(), null, 2));"
+      - name: Commit manifest
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name github-actions
+            git config user.email actions@github.com
+            git add manifest.json
+            git commit -m "chore: update manifest.json"
+            git push
+          fi
