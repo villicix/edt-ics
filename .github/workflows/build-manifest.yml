@@ -1,23 +1,68 @@
 name: Build manifest
+
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Generate manifest
+
+      - name: Generate manifest (recursive, cross-platform paths)
         run: |
-          node -e "require('fs').writeFileSync('manifest.json', JSON.stringify((()=>{const fs=require('fs');const path=require('path');const walk=(root)=>{let out={};const exists=fs.existsSync(root);if(!exists) return out;for(const dir of fs.readdirSync(root,{withFileTypes:true}).filter(d=>d.isDirectory())){const slug=dir.name;const folder=path.join(root,slug);const files=fs.readdirSync(folder,{withFileTypes:true}).filter(f=>f.isFile() && f.name.toLowerCase().endsWith('.ics')).map(f=>path.join(folder,f.name).replace(/\\/g,'/'));if(files.length) out[slug]=files; }return out;};return {publics: walk('cal/publics'), ues: walk('cal/ues')};})(), null, 2));"
-      - name: Commit manifest
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const toPosix = p => p.split(path.sep).join('/');
+
+          // Liste récursive des .ics sous un dossier
+          const listIcs = (dir) => {
+            if (!fs.existsSync(dir)) return [];
+            const out = [];
+            for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+              const p = path.join(dir, ent.name);
+              if (ent.isDirectory()) out.push(...listIcs(p));
+              else if (ent.isFile() && ent.name.toLowerCase().endsWith('.ics'))
+                out.push(toPosix(p));
+            }
+            return out;
+          };
+
+          // Parcours de premier niveau: chaque sous-dossier = slug
+          const walkTop = (root) => {
+            const out = {};
+            if (!fs.existsSync(root)) return out;
+            for (const d of fs.readdirSync(root, { withFileTypes: true }).filter(x => x.isDirectory())) {
+              const slug = d.name;
+              const files = listIcs(path.join(root, slug));
+              if (files.length) out[slug] = files;
+            }
+            return out;
+          };
+
+          const manifest = {
+            publics: walkTop('cal/publics'),
+            ues: walkTop('cal/ues'),
+          };
+
+          fs.writeFileSync('manifest.json', JSON.stringify(manifest, null, 2));
+          console.log('manifest.json written');
+          NODE
+
+      - name: Commit manifest if changed
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            git config user.name github-actions
-            git config user.email actions@github.com
+            git config user.name "github-actions"
+            git config user.email "actions@github.com"
             git add manifest.json
             git commit -m "chore: update manifest.json"
             git push
+          else
+            echo "No changes in manifest.json"
           fi
