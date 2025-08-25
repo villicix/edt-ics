@@ -1,11 +1,8 @@
 name: Build manifest
-
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
-  schedule:
-    - cron: "0 3 * * *"
 
 jobs:
   build:
@@ -13,47 +10,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate manifest (recursive, cross-platform paths)
+      - name: Generate manifest (flat)
         run: |
-          node <<'NODE'
-          const fs = require('fs');
-          const path = require('path');
+          python3 - <<'PY'
+          import os, json
+          def flat(root):
+              out = {}
+              if not os.path.isdir(root): return out
+              for slug in sorted(os.listdir(root)):
+                  folder = os.path.join(root, slug)
+                  if not os.path.isdir(folder): continue
+                  files = [
+                      (os.path.join(folder, f)).replace(os.sep, '/')
+                      for f in os.listdir(folder)
+                      if f.lower().endswith('.ics') and os.path.isfile(os.path.join(folder, f))
+                  ]
+                  if files:
+                      out[slug] = sorted(files)
+              return out
 
-          const toPosix = p => p.split(path.sep).join('/');
-
-          // Liste récursive des .ics sous un dossier
-          const listIcs = (dir) => {
-            if (!fs.existsSync(dir)) return [];
-            const out = [];
-            for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
-              const p = path.join(dir, ent.name);
-              if (ent.isDirectory()) out.push(...listIcs(p));
-              else if (ent.isFile() && ent.name.toLowerCase().endsWith('.ics'))
-                out.push(toPosix(p));
-            }
-            return out;
-          };
-
-          // Parcours de premier niveau: chaque sous-dossier = slug
-          const walkTop = (root) => {
-            const out = {};
-            if (!fs.existsSync(root)) return out;
-            for (const d of fs.readdirSync(root, { withFileTypes: true }).filter(x => x.isDirectory())) {
-              const slug = d.name;
-              const files = listIcs(path.join(root, slug));
-              if (files.length) out[slug] = files;
-            }
-            return out;
-          };
-
-          const manifest = {
-            publics: walkTop('cal/publics'),
-            ues: walkTop('cal/ues'),
-          };
-
-          fs.writeFileSync('manifest.json', JSON.stringify(manifest, null, 2));
-          console.log('manifest.json written');
-          NODE
+          manifest = {
+              'publics': flat('cal/publics'),
+              'ues': flat('cal/ues'),
+          }
+          with open('manifest.json', 'w', encoding='utf-8') as fh:
+              json.dump(manifest, fh, indent=2, ensure_ascii=False)
+          PY
 
       - name: Commit manifest if changed
         run: |
@@ -64,5 +46,5 @@ jobs:
             git commit -m "chore: update manifest.json"
             git push
           else
-            echo "No changes in manifest.json"
+            echo "No changes"
           fi
