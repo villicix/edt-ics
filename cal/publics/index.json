@@ -1,0 +1,170 @@
+[
+  {
+    "label": "01 basic timed",
+    "url": "cal/publics/01_basic_timed.ics"
+  },
+  {
+    "label": "02 allday",
+    "url": "cal/publics/02_allday.ics"
+  },
+  {
+    "label": "03 recurring weekly",
+    "url": "cal/publics/03_recurring_weekly.ics"
+  },
+  {
+    "label": "L2.INFO.CMI",
+    "url": "cal/publics/L2.INFO.CMI.ics"
+  },
+  {
+    "label": "L2.INFO.DANT",
+    "url": "cal/publics/L2.INFO.DANT.ics"
+  },
+  {
+    "label": "L2.INFO.DL IL",
+    "url": "cal/publics/L2.INFO.DL_IL.ics"
+  },
+  {
+    "label": "L2.INFO.DM IB",
+    "url": "cal/publics/L2.INFO.DM_IB.ics"
+  },
+  {
+    "label": "L2.INFO.DM IEEA",
+    "url": "cal/publics/L2.INFO.DM_IEEA.ics"
+  },
+  {
+    "label": "L2.INFO.DM IM",
+    "url": "cal/publics/L2.INFO.DM_IM.ics"
+  },
+  {
+    "label": "L2.INFO.DM IP",
+    "url": "cal/publics/L2.INFO.DM_IP.ics"
+  },
+  {
+    "label": "L2.INFO.INTENSIF",
+    "url": "cal/publics/L2.INFO.INTENSIF.ics"
+  },
+  {
+    "label": "L2.INFO.MAJ1",
+    "url": "cal/publics/L2.INFO.MAJ1.ics"
+  },
+  {
+    "label": "L2.INFO.MAJ2",
+    "url": "cal/publics/L2.INFO.MAJ2.ics"
+  },
+  {
+    "label": "L2.INFO.MIN",
+    "url": "cal/publics/L2.INFO.MIN.ics"
+  },
+  {
+    "label": "L2.INFO.MONO1",
+    "url": "cal/publics/L2.INFO.MONO1.ics"
+  },
+  {
+    "label": "L2.INFO.MONO2",
+    "url": "cal/publics/L2.INFO.MONO2.ics"
+  },
+  {
+    "label": "L2.INFO.MONO3",
+    "url": "cal/publics/L2.INFO.MONO3.ics"
+  },
+  {
+    "label": "L2.INFO.MONO4",
+    "url": "cal/publics/L2.INFO.MONO4.ics"
+  },
+  {
+    "label": "L2.INFO.MONO5",
+    "url": "cal/publics/L2.INFO.MONO5.ics"
+  },
+  {
+    "label": "L2.INFO.MONO6",
+    "url": "cal/publics/L2.INFO.MONO6.ics"
+  },
+  {
+    "label": "L2.MONO.OPTIONNEL",
+    "url": "cal/publics/L2.MONO.OPTIONNEL.ics"
+  },
+  {
+    "label": "L3.INFO.CMI",
+    "url": "cal/publics/L3.INFO.CMI.ics"
+  },
+  {
+    "label": "L3.INFO.DL IL",
+    "url": "cal/publics/L3.INFO.DL_IL.ics"
+  },
+  {
+    "label": "L3.INFO.DM IB",
+    "url": "cal/publics/L3.INFO.DM_IB.ics"
+  },
+  {
+    "label": "L3.INFO.DM IEEA",
+    "url": "cal/publics/L3.INFO.DM_IEEA.ics"
+  },
+  {
+    "label": "L3.INFO.DM IM",
+    "url": "cal/publics/L3.INFO.DM_IM.ics"
+  },
+  {
+    "label": "L3.INFO.DM IP",
+    "url": "cal/publics/L3.INFO.DM_IP.ics"
+  },
+  {
+    "label": "L3.INFO.INTENSIF",
+    "url": "cal/publics/L3.INFO.INTENSIF.ics"
+  },
+  {
+    "label": "L3.INFO.MAJ",
+    "url": "cal/publics/L3.INFO.MAJ.ics"
+  },
+  {
+    "label": "L3.INFO.MIN",
+    "url": "cal/publics/L3.INFO.MIN.ics"
+  },
+  {
+    "label": "L3.INFO.MONO1",
+    "url": "cal/publics/L3.INFO.MONO1.ics"
+  },
+  {
+    "label": "L3.INFO.MONO10",
+    "url": "cal/publics/L3.INFO.MONO10.ics"
+  },
+  {
+    "label": "L3.INFO.MONO11",
+    "url": "cal/publics/L3.INFO.MONO11.ics"
+  },
+  {
+    "label": "L3.INFO.MONO12",
+    "url": "cal/publics/L3.INFO.MONO12.ics"
+  },
+  {
+    "label": "L3.INFO.MONO2",
+    "url": "cal/publics/L3.INFO.MONO2.ics"
+  },
+  {
+    "label": "L3.INFO.MONO3",
+    "url": "cal/publics/L3.INFO.MONO3.ics"
+  },
+  {
+    "label": "L3.INFO.MONO4",
+    "url": "cal/publics/L3.INFO.MONO4.ics"
+  },
+  {
+    "label": "L3.INFO.MONO5",
+    "url": "cal/publics/L3.INFO.MONO5.ics"
+  },
+  {
+    "label": "L3.INFO.MONO6",
+    "url": "cal/publics/L3.INFO.MONO6.ics"
+  },
+  {
+    "label": "L3.INFO.MONO7",
+    "url": "cal/publics/L3.INFO.MONO7.ics"
+  },
+  {
+    "label": "L3.INFO.MONO8",
+    "url": "cal/publics/L3.INFO.MONO8.ics"
+  },
+  {
+    "label": "L3.INFO.MONO9",
+    "url": "cal/publics/L3.INFO.MONO9.ics"
+  }
+]
