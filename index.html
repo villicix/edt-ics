@@ -61,6 +61,25 @@
       </header>
 
       <main class="grid">
+        <section class="picker">
+              <h2>Sélectionner un emploi du temps</h2>
+            
+              <div class="group">
+                <label for="sel-publics">Publics</label>
+                <select id="sel-publics">
+                  <option value="">— choisir un public —</option>
+                </select>
+                <a id="dl-public" href="#" download hidden>Télécharger (.ics)</a>
+              </div>
+            
+              <div class="group">
+                <label for="sel-ues">UE</label>
+                <select id="sel-ues">
+                  <option value="">— choisir une UE —</option>
+                </select>
+                <a id="dl-ue" href="#" download hidden>Télécharger (.ics)</a>
+              </div>
+            </section>
         <section class="card">
           <h3>Publics</h3>
           <input id="search-public" class="search" placeholder="Rechercher un public…" aria-label="Rechercher un public" />
