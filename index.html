@@ -3,21 +3,77 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Emplois du temps (.ics)</title>
+    <title>EDT ICS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script defer src="/app.js"></script>
+
     <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 2rem; }
-      h1 { font-size: 1.6rem; }
-      ul { line-height: 1.9; }
-      code { background: #f5f5f5; padding: 2px 4px; border-radius: 4px; }
+      :root { --bg:#0b0b0ef9; --card:#121218; --muted:#9aa0a6; --text:#e5e7eb; --accent:#7c3aed; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        color: var(--text);
+        
+        background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%);
+        background-repeat: no-repeat;
+        background-attachment: fixed; /* gradient prend toute la page */
+    }
+
+      a { color:inherit; text-decoration:none; }
+      .title { color:#0e0e14;}
+      .wrap { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
+      .hero { display:grid; gap:16px; align-items:center; grid-template-columns: 1fr; text-align:center; }
+      .title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.02em; }
+      .subtitle { color: var(--muted); }
+      .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top:24px; }
+      .card { background:linear-gradient(180deg, rgba(189, 179, 207, 0.09), transparent), var(--card); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:16px; box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
+      .card h3 { margin:0 0 8px; font-size:18px; }
+      .search { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.12); background:#0e0e14; color:var(--text); outline:none; }
+      .list { margin-top:12px; max-height: 360px; overflow:auto; }
+      .item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 12px; border-radius:10px; border:1px solid transparent; }
+      .item:hover { background:rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
+      .pill { padding:4px 8px; border-radius:999px; font-size:12px; color:#d1c4ff; background:rgba(124,58,237,0.22); border:1px solid rgba(124,58,237,0.4); }
+      .muted { color: var(--muted); font-size: 12px; }
+      .row { display:flex; gap:8px; align-items:center; }
+      .actions { display:flex; gap:8px; }
+      .btn { padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,0.12); background:#0f0f15; color:var(--text); cursor:pointer; }
+      .btn:hover{ background:#11111a; }
+      .footer { margin-top:40px; text-align:center; color:var(--muted); font-size:13px; }
+      .tag { font-size:11px; padding:2px 6px; border-radius:8px; border:1px solid rgba(255,255,255,0.12); color: var(--muted); }
+      .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#14141c; border:1px solid rgba(255,255,255,0.12); padding:2px 6px; border-radius:6px; font-size:12px; }
+      .sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
     </style>
   </head>
   <body>
-    <h1>Emplois du temps (.ics)</h1>
-    <p>Exemples :</p>
-    <ul>
-      <li><a href="cal/etudiant1.ics">cal/etudiant1.ics</a></li>
-      <li><a href="cal/etudiant2.ics">cal/etudiant2.ics</a></li>
-    </ul>
-    <p>Pour s’abonner dans Google/Outlook/Apple Calendar, colle l’URL directe vers le fichier <code>.ics</code>.</p>
+    <div class="wrap">
+      <header class="hero">
+        <h1 class="title">Emplois du temps Sorbonne Université · ICS</h1>
+        <p class="subtitle">URLs par <strong>publics</strong> et par <strong>UEs</strong>.</p>
+        <div class="row" style="justify-content:center; gap:12px; flex-wrap:wrap">
+          <span class="tag">Static</span>
+          <span class="tag">No build</span>
+          <span class="tag">Deep-link ready</span>
+        </div>
+      </header>
+
+      <main class="grid">
+        <section class="card">
+          <h3>Publics</h3>
+          <input id="search-public" class="search" placeholder="Rechercher un public…" aria-label="Rechercher un public" />
+          <div id="list-public" class="list" role="list" aria-live="polite"></div>
+        </section>
+        <section class="card">
+          <h3>UEs</h3>
+          <input id="search-ue" class="search" placeholder="Rechercher une UE…" aria-label="Rechercher une UE" />
+          <div id="list-ue" class="list" role="list" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <p class="footer">Astuce : tu peux copier l’URL de n’importe quelle ligne. <span class="kbd">L</span> pour changer de layout (liste ↔ grille).</p>
+    </div>
   </body>
 </html>
