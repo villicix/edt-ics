@@ -14,7 +14,7 @@ function listICS(dir) {
         .replace(/[-_]+/g, ' ')
         .replace(/\s+/g, ' ')
         .trim();
-      // URL relative au site (sans leading slash)
+      // URL relative au site 
       return { label, url: `${dir}/${encodeURIComponent(file)}` };
     })
     .sort((a, b) => a.label.localeCompare(b.label, 'fr', { sensitivity: 'base' }));
