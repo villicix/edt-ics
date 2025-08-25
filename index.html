@@ -17,12 +17,10 @@
         min-height: 100vh;
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         color: var(--text);
-        
         background: linear-gradient(180deg, #ffffff 0%, #cccccc 100%);
         background-repeat: no-repeat;
-        background-attachment: fixed; /* gradient prend toute la page */
-    }
-
+        background-attachment: fixed;
+      }
       a { color:inherit; text-decoration:none; }
       .title { color:#0e0e14;}
       .wrap { max-width: 980px; margin: 0 auto; padding: 32px 16px 64px; }
@@ -32,7 +30,7 @@
       .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top:24px; }
       .card { background:linear-gradient(180deg, rgba(189, 179, 207, 0.09), transparent), var(--card); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:16px; box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
       .card h3 { margin:0 0 8px; font-size:18px; }
-      .search { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.12); background:#0e0e14; color:var(--text); outline:none; }
+      .search, select { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.12); background:#0e0e14; color:var(--text); outline:none; }
       .list { margin-top:12px; max-height: 360px; overflow:auto; }
       .item { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 12px; border-radius:10px; border:1px solid transparent; }
       .item:hover { background:rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); }
@@ -42,10 +40,13 @@
       .actions { display:flex; gap:8px; }
       .btn { padding:8px 10px; border-radius:10px; border:1px solid rgba(255,255,255,0.12); background:#0f0f15; color:var(--text); cursor:pointer; }
       .btn:hover{ background:#11111a; }
-      .footer { margin-top:40px; text-align:center; color:var(--muted); font-size:13px; }
+      .footer { margin-top:40px; text-align:center; color: var(--muted); font-size:13px; }
       .tag { font-size:11px; padding:2px 6px; border-radius:8px; border:1px solid rgba(255,255,255,0.12); color: var(--muted); }
       .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#14141c; border:1px solid rgba(255,255,255,0.12); padding:2px 6px; border-radius:6px; font-size:12px; }
       .sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+      .hint { margin-top:8px; font-size:12px; color:var(--muted); }
+      .download { margin-top:10px; display:inline-block; }
+      .hidden { display:none; }
     </style>
   </head>
   <body>
@@ -61,38 +62,30 @@
       </header>
 
       <main class="grid">
-        <section class="picker">
-              <h2>Sélectionner un emploi du temps</h2>
-            
-              <div class="group">
-                <label for="sel-publics">Publics</label>
-                <select id="sel-publics">
-                  <option value="">— choisir un public —</option>
-                </select>
-                <a id="dl-public" href="#" download hidden>Télécharger (.ics)</a>
-              </div>
-            
-              <div class="group">
-                <label for="sel-ues">UE</label>
-                <select id="sel-ues">
-                  <option value="">— choisir une UE —</option>
-                </select>
-                <a id="dl-ue" href="#" download hidden>Télécharger (.ics)</a>
-              </div>
-            </section>
+        <!-- Carte PUBLICS -->
         <section class="card">
           <h3>Publics</h3>
-          <input id="search-public" class="search" placeholder="Rechercher un public…" aria-label="Rechercher un public" />
-          <div id="list-public" class="list" role="list" aria-live="polite"></div>
+          <label class="sr" for="sel-public">Choisir un public</label>
+          <select id="sel-public">
+            <option value="">— choisir un public —</option>
+          </select>
+          <a id="dl-public" class="btn download hidden" href="#" download>Télécharger (.ics)</a>
+          <p class="hint">Liste construite depuis <code>cal/publics/index.json</code></p>
         </section>
+
+        <!-- Carte UES -->
         <section class="card">
           <h3>UEs</h3>
-          <input id="search-ue" class="search" placeholder="Rechercher une UE…" aria-label="Rechercher une UE" />
-          <div id="list-ue" class="list" role="list" aria-live="polite"></div>
+          <label class="sr" for="sel-ue">Choisir une UE</label>
+          <select id="sel-ue">
+            <option value="">— choisir une UE —</option>
+          </select>
+          <a id="dl-ue" class="btn download hidden" href="#" download>Télécharger (.ics)</a>
+          <p class="hint">Liste construite depuis <code>cal/ues/index.json</code></p>
         </section>
       </main>
 
-      <p class="footer">Astuce : tu peux copier l’URL de n’importe quelle ligne. <span class="kbd">L</span> pour changer de layout (liste ↔ grille).</p>
+      <p class="footer">Astuce : tu peux copier l’URL de n’importe quel .ics depuis le bouton.</p>
     </div>
   </body>
 </html>
